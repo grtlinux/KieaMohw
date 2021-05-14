@@ -39,24 +39,31 @@ public class CipherUtils {
 	/*
 	 * Public Key로 RSA 암호화를 수행합니다.
 	 */
-	public static String encryptRSA(String plainText, PublicKey publicKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+	public static byte[] encryptRSA(byte[] bPlainText, PublicKey publicKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 		Cipher cipher = Cipher.getInstance("RSA");
 		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-		byte[] bytePlain = cipher.doFinal(plainText.getBytes());
-		String encrypted = Base64.getEncoder().encodeToString(bytePlain);
-		return encrypted;
+		byte[] bEncText = cipher.doFinal(bPlainText);
+		byte[] bB64EncText = Base64.getEncoder().encode(bEncText);
+		return bB64EncText;
+	}
+	
+	public static String encryptRSA(String plainText, PublicKey publicKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+		return new String(encryptRSA(plainText.getBytes(), publicKey));
 	}
 	
 	/*
 	 * Private Key로 RAS 복호화를 수행합니다.
 	 */
-	public static String decryptRSA(String encrypted, PrivateKey privateKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+	public static byte[] decryptRSA(byte[] bB64EncText, PrivateKey privateKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
 		Cipher cipher = Cipher.getInstance("RSA");
-		byte[] byteEncrypted = Base64.getDecoder().decode(encrypted.getBytes());
+		byte[] bEncText = Base64.getDecoder().decode(bB64EncText);
 		cipher.init(Cipher.DECRYPT_MODE, privateKey);
-		byte[] bytePlain = cipher.doFinal(byteEncrypted);
-		String decrypted = new String(bytePlain, "utf-8");
-		return decrypted;
+		byte[] bPlainText = cipher.doFinal(bEncText);
+		return bPlainText;
+	}
+	
+	public static String decryptRSA(String strB64EncText, PrivateKey privateKey) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
+		return new String(decryptRSA(strB64EncText.getBytes(), privateKey));
 	}
 	
 	/*

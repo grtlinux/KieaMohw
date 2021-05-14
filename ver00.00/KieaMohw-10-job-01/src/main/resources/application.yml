@@ -148,9 +148,19 @@ proj-env:
     name: PARAM (air)
     home: /Users/kang-air
     base: /KANG/mohw/20210515
+    data-path: /DATA
     info-sign-path: /INFO_SIGN
   job:
     name: JOB (air)
+    hw-init: true
+    hw-date-folder: true
+    hw-pub-key: true
+    hw-pri-key: true
+    mo-b64-pub-key: true
+    hw-otk: true
+    mo-b64-pub-otk: true
+    mo-files-b64: true
+    hw-files: true
   json:
     name: JSON (air)
   url:

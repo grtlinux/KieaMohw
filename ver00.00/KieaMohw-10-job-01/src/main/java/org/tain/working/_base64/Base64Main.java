@@ -41,8 +41,8 @@ public class Base64Main {
 		byte[] sendImg = readFile(SEND_STAMP_IMG_NAME);
 
 		// BASE64 인코딩
-		//byte[] b64SendImg = Base64.encodeBase64(sendImg);
-		byte[] b64SendImg = Base64.getEncoder().encode(sendImg);
+		byte[] b64SendImg = org.apache.commons.codec.binary.Base64.encodeBase64(sendImg);
+		//byte[] b64SendImg = Base64.getEncoder().encode(sendImg);
 
 		System.out.println("송신 직인 이미지 size[" + sendImg.length + "] b64 size[" + b64SendImg.length + "]");
 		//System.out.println("[직인]");
@@ -119,7 +119,6 @@ public class Base64Main {
 	
 	///////////////////////////////////////////////////////////////////////////
 	//
-	@SuppressWarnings("unused")
 	public void start2() throws Exception {
 		System.out.println("[간단 예제 START]");
 
