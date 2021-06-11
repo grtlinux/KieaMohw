@@ -1,0 +1,210 @@
+
+
+# --------------------------------
+# BASE of type
+
+spring:
+  # legacy method
+  # config.use-legacy-processing: true
+  profiles.active:
+  - proj-default
+  - proj-air
+  #- proj-pro
+  #- proj-aws
+  #- proj-dfep
+  #- proj-real
+
+
+# %Logger{length} : Logger name을 축약할 수 있다. {length}는 최대 자리 수, ex)logger{35}
+# %-5level : 로그 레벨, -5는 출력의 고정폭 값(5글자)
+# %msg : - 로그 메시지 (=%message)
+# ${PID:-} : 프로세스 아이디
+# %d : 로그 기록시간
+# %p : 로깅 레벨
+# %F : 로깅이 발생한 프로그램 파일명
+# %M : 로깅일 발생한 메소드의 명
+# %l : 로깅이 발생한 호출지의 정보
+# %L : 로깅이 발생한 호출지의 라인 수
+# %thread : 현재 Thread 명
+# %t : 로깅이 발생한 Thread 명
+# %c : 로깅이 발생한 카테고리
+# %C : 로깅이 발생한 클래스 명
+# %m : 로그 메시지
+# %n : 줄바꿈(new line)
+# %% : %를 출력
+# %r : 애플리케이션 시작 이후부터 로깅이 발생한 시점까지의 시간(ms)
+#
+logging:
+  file:
+    path: logs/type/
+    max-size: 10MB
+    max-history: 30         # delete after a month
+  pattern:
+    console: "%clr(%d{HH:mm:ss} %p){magenta} - %m%n"
+    file: "%d %-5level [%-10thread] [%-30logger{30}] - %m%n"
+  level:
+    root: info
+    org.tain.*: info
+
+
+---
+# --------------------------------------------------------
+# --------------------------------------------------------
+# --------------------------------------------------------
+spring:
+  #profiles: proj-default
+  config.activate.on-profile: proj-default
+
+proj-env:
+  base:
+    name: MOHW API project
+    program: KieaMonster API program
+    version: ver 1.1_2021.06.01
+    comment: This is MOHW API project.
+    char-set: utf-8
+    test-flag: true
+  param:
+    name: PARAM (default)
+  job:
+    name: JOB (default)
+  json:
+    name: JSON (default)
+  url:
+    name: URL (default)
+
+---
+# --------------------------------------------------------
+# proj-local
+spring:
+  # profiles: proj-air
+  config.activate.on-profile: proj-air
+
+proj-env:
+  param:
+    name: PARAM (air)
+    # home: /Users/kang-air
+    home: /Users/kangmac
+    base: /KANG/monster/20210320
+    key-path: /KEY
+    work-path: /WORK
+    conf-path: /CONF
+    today-path: /YYYYMMDD
+
+    hw-prikey-bin: HW_PriKey.bin
+    hw-prikey-b64: HW_PriKey.b64
+
+    hw-pubkey-bin: HW_PubKey.bin
+    hw-pubkey-b64: HW_PubKey.b64
+
+    hw-otk-bin: HW_OTK.bin
+    hw-otk-enc: HW_OTK.enc
+    hw-otk-b64: HW_OTK.b64
+
+    mo-pubkey-bin: MO_PubKey.bin
+    mo-pubkey-b64: MO_PubKey.b64
+
+    mo-otk-bin: MO_OTK.bin
+    mo-otk-enc: MO_OTK.enc
+    mo-otk-b64: MO_OTK.b64
+
+    mo-af71-b64: AF71.b64
+    mo-af71-gz:  AF71.gz
+    mo-af71-enc: AF71.enc
+    mo-af71-dat: AF71.dat
+
+    #step00-flag: true   # 기타 작업
+    
+    step01-flag: true   # 작업폴더를 생성한다.
+    step02-flag: true   # Key 없으면 생성한다. KeyPair
+    step03-flag: true   # Key를 작업폴더에 복사한다.
+    step04-flag: true   # KeyPair에 BASE64 처리
+    step05-flag: true   # FI0000(1000) HW공개키 송신
+    step06-flag: true   # FI0001(1000) MO공개키 수신
+    step07-flag: true   # 변환: HW_OTK.b64 생성 using MO_PubKey.bin
+    step08-flag: true   # FI0071(1000:300:AF71) 요구정보 수신
+    step09-flag: true   # FI0072(1000) OTK 수신
+    step10-flag: true   # 변환:
+    step11-flag: true   # 변환:
+    
+    #step12-flag: true   # FI0076(400) 제공정보 송신
+    #step13-flag: true   # FI0077(1000) OTK 송신
+    #step14-flag: true   # FI1100(1000) PubKey 에러 수신
+    #step15-flag: true   # FI1176(400) 제공정보 에러 수신
+
+
+  job:
+    name: JOB (air)
+  json:
+    name: JSON (air)
+  url:
+    name: URL (air)
+
+---
+# --------------------------------------------------------
+# proj-test
+spring:
+  # profiles: proj-pro
+  config.activate.on-profile: proj-pro
+
+proj-env:
+  param:
+    name: PARAM (pro)
+  job:
+    name: JOB (pro)
+  json:
+    name: JSON (pro)
+  url:
+    name: URL (pro)
+
+---
+# --------------------------------------------------------
+# proj-aws
+spring:
+  # profiles: proj-aws
+  config.activate.on-profile: proj-aws
+
+proj-env:
+  param:
+    name: PARAM (aws)
+  job:
+    name: JOB (aws)
+  json:
+    name: JSON (aws)
+  url:
+    name: URL (aws)
+
+---
+# --------------------------------------------------------
+# proj-dfep
+spring:
+  # profiles: proj-dfep
+  config.activate.on-profile: proj-dfep
+
+proj-env:
+  param:
+    name: PARAM (dfep)
+  job:
+    name: JOB (dfep)
+  json:
+    name: JSON (dfep)
+  url:
+    name: URL (dfep)
+
+---
+# --------------------------------------------------------
+# proj-real
+spring:
+  # profiles: proj-real
+  config.activate.on-profile: proj-real
+
+proj-env:
+  param:
+    name: PARAM (real)
+  job:
+    name: JOB (real)
+  json:
+    name: JSON (real)
+  url:
+    name: URL (real)
+
+
